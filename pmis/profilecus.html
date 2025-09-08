@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Creation</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <script src="app.js"></script>
+</head>
+<body>
+  <div class="pcontainer">
+    <h1>Create Your Profile</h1>
+    <form class="pprofile-form">
+      
+      <div class="pform-group">
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" placeholder="Enter your full name" required>
+      </div>
+
+      <div class="pform-group">
+        <label for="email">Email ID</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="pform-group">
+        <label for="phone">Mobile Number</label>
+        <input type="tel" id="phone" placeholder="Enter your phone number" required>
+      </div>
+
+      <div class="pform-group">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" required>
+      </div>
+
+      <div class="pform-group">
+        <label for="address">Address</label>
+        <textarea id="address" placeholder="Enter your address" required></textarea>
+      </div>
+
+      <div class="pform-group">
+        <label for="education">Education</label>
+        <input type="text" id="education" placeholder="Your education details" required>
+      </div>
+
+
+
+      <button type="submit">Create profile</button>
+    </form>
+  </div>
+  <script>
+  document.querySelector('.pprofile-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    // You can handle form data here if needed
+    window.location.href = 'indexafterlogin.html';
+  });
+  </script>
+</body>
+</html>
