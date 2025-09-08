@@ -32,11 +32,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // Openings data
 const DATA = [
-  { title:'Junior Electrical Intern', org:'Bharat Power Co.', district:'Chennai', sector:'Electrical', duration:12, stipend:5000, tags:['12 months','On-site','CSR'] },
-  { title:'Data Entry Assistant', org:'DigitServe Pvt Ltd', district:'Bengaluru Urban', sector:'IT / Software', duration:6, stipend:5000, tags:['6 months','Remote'] },
-  { title:'Ward Support Trainee', org:'CityCare Hospitals', district:'Hyderabad', sector:'Healthcare', duration:3, stipend:5000, tags:['3 months','On-site'] },
-  { title:'Assembly Line Intern', org:'Shakti Manufacturing', district:'Mumbai Suburban', sector:'Manufacturing', duration:12, stipend:5000, tags:['12 months','On-site'] },
-  { title:'Accounts Support Intern', org:'Lakshmi Finance', district:'New Delhi', sector:'Finance', duration:6, stipend:5000, tags:['6 months','Hybrid'] }
+  { id: 1, title:'Junior Electrical Intern', org:'Bharat Power Co.', district:'Chennai', sector:'Electrical', duration:12, stipend:5000, tags:['12 months','On-site','CSR'], keywords: ['electrical engineering', 'circuits', 'autocad', 'safety protocols'] },
+  { id: 2, title:'Data Entry Assistant', org:'DigitServe Pvt Ltd', district:'Bengaluru Urban', sector:'IT / Software', duration:6, stipend:5000, tags:['6 months','Remote'], keywords: ['data entry', 'ms excel', 'typing', 'attention to detail', 'spreadsheets'] },
+  { id: 3, title:'Ward Support Trainee', org:'CityCare Hospitals', district:'Hyderabad', sector:'Healthcare', duration:3, stipend:5000, tags:['3 months','On-site'], keywords: ['patient care', 'communication', 'healthcare support', 'empathy'] },
+  { id: 4, title:'Assembly Line Intern', org:'Shakti Manufacturing', district:'Mumbai Suburban', sector:'Manufacturing', duration:12, stipend:5000, tags:['12 months','On-site'], keywords: ['manufacturing', 'assembly', 'quality control', 'hand tools'] },
+  { id: 5, title:'Accounts Support Intern', org:'Lakshmi Finance', district:'New Delhi', sector:'Finance', duration:6, stipend:5000, tags:['6 months','Hybrid'], keywords: ['accounting', 'finance', 'tally', 'bookkeeping', 'ms excel'] }
 ];
 
 const cardsEl = document.getElementById('cards');
@@ -145,20 +145,55 @@ loginForm?.addEventListener('submit', (e) => {
   onclick = function() { window.location.href = "index.html"; }
 });
 
-//Redirect to index.html after creating profile
-document.getElementById('profilesubmit').addEventListener("click", function(event) {
-  window.location.href = "index.html"; 
-});
+/**
+ * AI Recommendation Engine Logic
+ * This function calculates a match score for each job based on user skills.
+ */
+function getRecommendations(userSkills) {
+  // 1. Clean up user input: convert to lowercase and split into an array.
+  const userSkillSet = userSkills.toLowerCase().split(',').map(s => s.trim());
 
-
-
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.querySelector(".pprofile-form");
-
-  form.addEventListener("profilesubmit", function (event) {
-    event.preventDefault(); // stop actual form submission
-    window.location.href = "index.html"; // redirect
+  const scoredJobs = DATA.map(job => {
+    let score = 0;
+    // 2. Compare user skills with job keywords
+    job.keywords.forEach(keyword => {
+      if (userSkillSet.includes(keyword)) {
+        score += 10; // Add 10 points for each matching skill
+      }
+    });
+    return { ...job, score };
   });
+
+  // 3. Sort jobs by score in descending order
+  const recommendedJobs = scoredJobs.sort((a, b) => b.score - a.score);
+
+  // 4. Return the top 3-5 recommendations that have a score > 0
+  return recommendedJobs.filter(job => job.score > 0).slice(0, 5);
+}
+
+// --- Handle Profile Creation and Recommendation ---
+const profileForm = document.querySelector('.pprofile-form');
+profileForm?.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  // Get user skills from the new textarea
+  const userSkills = document.getElementById('skills').value;
+
+  // Get recommendations
+  const recommendations = getRecommendations(userSkills);
+
+  // Save recommendations to localStorage to be displayed on the next page
+  localStorage.setItem('jobRecommendations', JSON.stringify(recommendations));
+
+  // Save other profile data (as before)
+  const profileData = {
+    fullname: document.getElementById('fullname').value,
+    email: document.getElementById('email').value,
+    skills: userSkills, // also save skills to profile
+    // ... add other fields
+  };
+  localStorage.setItem('userProfile', JSON.stringify(profileData));
+
+  // Redirect to the logged-in homepage to show the results
+  window.location.href = 'indexafterlogin.html';
 });
-
-

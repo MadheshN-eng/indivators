@@ -4,8 +4,8 @@ body {
     font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
     padding: 0;
-}
 
+}
 .pcontainer {
     max-width: 500px;
     margin: 40px auto;
@@ -638,5 +638,34 @@ nav.primary a:hover {
   text-align: left;
 }
 
+/* ===== Auth Page (Login/Register) ===== */
+.auth-card {
+    max-width: 420px;
+    margin: 40px auto;
+    padding: 28px;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow);
+}
 
+.auth-form {
+    display: grid;
+    gap: 16px;
+    margin-top: 16px;
+}
 
+.auth-form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--gray-700);
+}
+
+.auth-form input {
+    border: 1px solid var(--gray-300);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-top: 6px;
+}

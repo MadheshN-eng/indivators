@@ -6,7 +6,6 @@
   <title>Profile Creation</title>
   <link rel="stylesheet" href="styles.css">
 
-  <script src="app.js"></script>
 </head>
 <body>
   <div class="pcontainer">
@@ -43,13 +42,22 @@
         <input type="text" id="education" placeholder="Your education details" required>
       </div>
 
+      <div class="pform-group">
+        <label for="skills">Skills</label>
+        <textarea id="skills" placeholder="Enter your skills, separated by commas (e.g., Python, Data Analysis, MS Excel)" required rows="3"></textarea>
+        <small class="muted">This will be used to recommend internships to you.</small>
+      </div>
 
+      <div class="pform-group">
+        <label for="resume">Upload Resume (Optional)</label>
+        <input type="file" id="resume" accept=".pdf,.doc,.docx">
+      </div>
 
-      <button type="submit">Create profile</button>
+      <button type="submit" id="createProfileBtn">Create Profile & See Matches</button>
     </form>
   </div>
   <script>
-  document.querySelector('.pprofile-form').addEventListener('submit', function(e) {
+  document.getElementById('createProfileBtn').addEventListener('click', function(e) {
     e.preventDefault();
     // You can handle form data here if needed
     window.location.href = 'indexafterlogin.html';
