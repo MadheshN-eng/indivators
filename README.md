@@ -1,0 +1,2 @@
+# indivators
+resume scanning reccomendation
